@@ -1,6 +1,6 @@
 # OCISpec Workflow
 
-**Codex-Native Command-Driven Development Flow Based on RPI Theory**
+**Codex-Native Development Workflow Based on RPI Theory**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -10,7 +10,7 @@ English | [简体中文](./README.md)
 
 ## Overview
 
-**OCISpec Workflow** is a command-driven development flow that runs independently on Codex without Claude-specific tools. Built on **RPI (Research-Plan-Implementation) theory**, it integrates OpenSpec specifications and CSV state machines to achieve a complete loop from requirements to implementation.
+**OCISpec Workflow** is a skill-based development flow that runs independently on Codex without Claude-specific tools. Built on **RPI (Research-Plan-Implementation) theory**, it integrates OpenSpec specifications and CSV state machines to achieve a complete loop from requirements to implementation.
 
 ### Key Features
 
@@ -21,15 +21,16 @@ English | [简体中文](./README.md)
 - ✅ **CSV State Machine**: State externalized to files, independent of conversation windows
 - ✅ **Transparent Limited Validation**: `validation_limited` + `manual_test` + `risk` markers
 
-### Command Set
+### Commands
 
 | Command | Function |
 |---------|----------|
-| `/prompts:oci:init` | Initialize environment and detect tool availability |
-| `/prompts:oci:research` | Transform requirements into constraint sets |
-| `/prompts:oci:plan` | Generate zero-decision execution plan |
-| `/prompts:oci:openspec_to_csv` | Convert to executable CSV |
-| `/prompts:oci:csv_execute` | Execute implementation and validation loop |
+| `/oci:init` | Initialize environment and detect tool availability |
+| `/oci:research` | Transform requirements into constraint sets |
+| `/oci:plan` | Generate zero-decision execution plan |
+| `/oci:openspec_to_csv` | Convert to executable CSV |
+| `/oci:csv_execute` | Execute implementation and validation loop |
+| `/oci:workflow` | Show full workflow overview |
 
 ---
 
@@ -37,7 +38,7 @@ English | [简体中文](./README.md)
 
 ### Prerequisites
 
-- [Codex](https://codex.storage/) or [Claude Code](https://docs.claude.com/docs/claude-code)
+- [Codex](https://developers.openai.com/codex) or [Claude Code](https://docs.claude.com/docs/claude-code)
 - [Auggie MCP](https://docs.augmentcode.com/context-services/mcp/quickstart-claude-code) (optional, for semantic search)
 
 ### Installation
@@ -45,32 +46,20 @@ English | [简体中文](./README.md)
 **Linux / macOS**
 
 ```bash
-# User-level installation (all projects)
+# User-level installation: install each skill to $CODEX_HOME/skills/
 ./install.sh --user
 
-# Project-level installation (current project only)
+# Project-level installation: install to ./.codex/skills/ in this repo
 ./install.sh --project
 
-# Custom path
-./install.sh --target /custom/path
-```
-
-**Windows (PowerShell)**
-
-```powershell
-# User-level installation
-.\install.ps1 -User
-
-# Project-level installation
-.\install.ps1 -Project
-
-# Custom path
-.\install.ps1 -Target "C:\custom\path"
+# Custom CODEX_HOME root
+./install.sh --target ~/.codex
 ```
 
 ### Verify Installation
 
-After starting Codex, type `/prompts:oci` to see available commands.
+- Restart Codex / Claude Code after installation
+- Type `/oci:init`
 
 ---
 
@@ -78,21 +67,19 @@ After starting Codex, type `/prompts:oci` to see available commands.
 
 ```bash
 # 1. Initialize environment
-/prompts:oci:init
+/oci:init
 
-# 2. Research requirements
-/prompts:oci:research "Implement user authentication"
-# If ## Open Questions exist → confirm with user and re-run
+# 2. Research requirement
+/oci:research "Implement user authentication"
 
-# 3. Generate plan
-/prompts:oci:plan openspec/proposal.md
-# If ## Open Questions exist → confirm with user and re-run
+# 3. Freeze plan
+/oci:plan openspec/proposal.md
 
 # 4. Generate CSV
-/prompts:oci:openspec_to_csv openspec/proposal.md
+/oci:openspec_to_csv openspec/proposal.md
 
 # 5. Execute implementation
-/prompts:oci:csv_execute issues/2026-03-21_10-30-00-auth.csv
+/oci:csv_execute issues/2026-03-21_10-30-00-auth.csv
 ```
 
 ---

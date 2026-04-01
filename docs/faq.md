@@ -92,7 +92,7 @@ Research 或 Plan 阶段遇到歧义时会标记：
 
 当前版本是单模型流程，但预留了扩展点：
 
-1. 在 `oci:plan.md` 中补充模型路由逻辑
+1. 在对应 SKILL.md 中补充模型路由逻辑
 2. 调用 Codex MCP 或 Gemini MCP
 3. 聚合多模型输出
 
@@ -122,3 +122,25 @@ Research 阶段限制 **5-8 次工具调用**。
 | CSV 状态机 | ✅ 含 `git_state` | ✅ 不含（更简洁） |
 
 OCISpec 更适合 Codex 独立运行和自动化场景。
+
+---
+
+## Q11: 为什么仓库不再提供 `/prompts:oci:*`？
+
+因为仓库已经切换到独立 skill 分发，每个阶段一个独立 skill。
+
+这样做有两个目的：
+
+1. 项目共享路径更稳定，直接对齐 Codex / Claude Code 的 skill 机制
+2. 不再维护一套 prompt 兼容层，避免文档和安装方式分叉
+
+现在统一使用：
+
+- `./install.sh --user`
+  - 安装各 skill 到 `~/.codex/skills/`（如 `oci:init/`、`oci:research/` 等）
+- `./install.sh --project`
+  - 安装到 `./.codex/skills/`
+- 使用方式
+  - `/oci:init`、`/oci:research "需求"` 等
+
+安装后仍然需要重启 Codex / Claude Code，让它重新发现 skill。

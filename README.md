@@ -1,6 +1,6 @@
 # OCISpec Workflow
 
-**基于 RPI 理论的 Codex 原生命令驱动开发流程**
+**基于 RPI 理论的 Codex 原生 Skill 工作流**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -10,7 +10,7 @@
 
 ## 项目简介
 
-**OCISpec Workflow** 是一套完全独立于 Claude、可在 Codex 上运行的命令驱动开发流程。核心设计基于 **RPI (Research-Plan-Implementation) 编码理论**，融合 OpenSpec 规范和 CSV 状态机，实现从需求到实现的完整闭环。
+**OCISpec Workflow** 是一套完全独立于 Claude、可在 Codex 上运行的 Skill 工作流。核心设计基于 **RPI (Research-Plan-Implementation) 编码理论**，融合 OpenSpec 规范和 CSV 状态机，实现从需求到实现的完整闭环。
 
 ### 核心特性
 
@@ -25,11 +25,12 @@
 
 | 命令 | 功能 |
 |------|------|
-| `/prompts:oci:init` | 初始化环境，检测工具可用性 |
-| `/prompts:oci:research` | 将需求转化为约束集 |
-| `/prompts:oci:plan` | 生成零决策执行计划 |
-| `/prompts:oci:openspec_to_csv` | 转换为可执行 CSV |
-| `/prompts:oci:csv_execute` | 执行实现与验收闭环 |
+| `/oci:init` | 初始化环境，检测工具可用性 |
+| `/oci:research` | 将需求转化为约束集 |
+| `/oci:plan` | 生成零决策执行计划 |
+| `/oci:openspec_to_csv` | 转换为可执行 CSV |
+| `/oci:csv_execute` | 执行实现与验收闭环 |
+| `/oci:workflow` | 查看完整流程说明 |
 
 ---
 
@@ -37,7 +38,7 @@
 
 ### 前置要求
 
-- [Codex](https://codex.storage/) 或 [Claude Code](https://docs.claude.com/docs/claude-code)
+- [Codex](https://developers.openai.com/codex) 或 [Claude Code](https://docs.claude.com/docs/claude-code)
 - [Auggie MCP](https://docs.augmentcode.com/context-services/mcp/quickstart-claude-code) (可选，用于语义检索)
 
 ### 安装
@@ -45,32 +46,20 @@
 **Linux / macOS**
 
 ```bash
-# 用户级安装（所有项目生效）
+# 用户级安装：安装各 skill 到 $CODEX_HOME/skills/
 ./install.sh --user
 
-# 项目级安装（仅当前项目生效）
+# 项目级安装：安装到当前仓库的 ./.codex/skills/
 ./install.sh --project
 
-# 自定义路径
-./install.sh --target /custom/path
-```
-
-**Windows (PowerShell)**
-
-```powershell
-# 用户级安装
-.\install.ps1 -User
-
-# 项目级安装
-.\install.ps1 -Project
-
-# 自定义路径
-.\install.ps1 -Target "C:\custom\path"
+# 自定义 CODEX_HOME 根目录
+./install.sh --target ~/.codex
 ```
 
 ### 验证安装
 
-启动 Codex 后输入 `/prompts:oci` 即可查看可用命令。
+- 安装后重启 Codex / Claude Code
+- 输入 `/oci:init`
 
 ---
 
@@ -78,21 +67,19 @@
 
 ```bash
 # 1. 初始化环境
-/prompts:oci:init
+/oci:init
 
 # 2. 研究需求
-/prompts:oci:research "实现用户认证功能"
-# 若有 ## 待确认问题 → 用户确认后重新运行
+/oci:research "实现用户认证功能"
 
-# 3. 生成计划
-/prompts:oci:plan openspec/proposal.md
-# 若有 ## 待确认问题 → 用户确认后重新运行
+# 3. 冻结计划
+/oci:plan openspec/proposal.md
 
 # 4. 生成 CSV
-/prompts:oci:openspec_to_csv openspec/proposal.md
+/oci:openspec_to_csv openspec/proposal.md
 
 # 5. 执行实现
-/prompts:oci:csv_execute issues/2026-03-21_10-30-00-auth.csv
+/oci:csv_execute issues/2026-03-21_10-30-00-auth.csv
 ```
 
 ---

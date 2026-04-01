@@ -12,7 +12,7 @@ init → research → plan → openspec_to_csv → csv_execute
 
 ### 1. Init - 环境初始化
 
-**命令**: `/prompts:oci:init`
+**命令**: `/oci:init`
 
 **目标**: 检测并初始化项目的 OCI 工作流环境。
 
@@ -30,13 +30,13 @@ init → research → plan → openspec_to_csv → csv_execute
 }
 ```
 
-**下一步**: 清空上下文后执行 `/prompts:oci:research <需求>`
+**下一步**: 清空上下文后运行 `/oci:research`
 
 ---
 
 ### 2. Research - 需求研究
 
-**命令**: `/prompts:oci:research <需求描述>`
+**命令**: `/oci:research "<需求描述>"`
 
 **目标**: 将模糊需求转化为结构化约束集。
 
@@ -64,14 +64,14 @@ init → research → plan → openspec_to_csv → csv_execute
 ```
 
 **下一步**:
-- 若有 `## 待确认问题` → 用户确认后重新运行 research
-- 若无歧义 → `/prompts:oci:plan <proposal-path>`
+- 若有 `## 待确认问题` → 用户确认后重新运行 `/oci:research`
+- 若无歧义 → 运行 `/oci:plan`
 
 ---
 
 ### 3. Plan - 零决策计划
 
-**命令**: `/prompts:oci:plan <proposal-path>`
+**命令**: `/oci:plan <proposal-path>`
 
 **目标**: 将约束集转化为零决策执行序列。
 
@@ -87,13 +87,13 @@ init → research → plan → openspec_to_csv → csv_execute
 - 标准模式: `proposal.md` + `design.md` + `tasks.md`
 - 单文档模式: `proposal.md`（含零决策任务流 + PBT）
 
-**下一步**: `/prompts:oci:openspec_to_csv <proposal-path>`
+**下一步**: 运行 `/oci:openspec_to_csv`
 
 ---
 
 ### 4. OpenSpec to CSV - 转换为可执行任务
 
-**命令**: `/prompts:oci:openspec_to_csv <proposal-path>`
+**命令**: `/oci:openspec_to_csv <proposal-path>`
 
 **目标**: 将规划文档转换为可执行的 issues CSV。
 
@@ -112,13 +112,13 @@ id,priority,phase,area,title,description,acceptance_criteria,test_mcp,review_ini
 
 **输出**: `issues/YYYY-MM-DD_HH-mm-ss-<slug>.csv`
 
-**下一步**: `/prompts:oci:csv_execute <csv-path>`
+**下一步**: 运行 `/oci:csv_execute`
 
 ---
 
 ### 5. CSV Execute - 执行与验收闭环
 
-**命令**: `/prompts:oci:csv_execute <csv-path>`
+**命令**: `/oci:csv_execute <csv-path>`
 
 **目标**: 以 CSV 为唯一状态源执行实现、Review 和验收闭环。
 
